@@ -64,7 +64,8 @@ return z.request(url, options)
 	  for(var resp in responses){
 		if(resp == "auth_token"){
 			return {
-			  auth_token: responses[resp] || 'new auth token!'
+			  auth_token: responses[resp] || 'new auth token!',
+			  connection_label: bundle.authData.connection_label || 'Connection Label'
 			};
 		}
 	  }
@@ -76,6 +77,12 @@ module.exports = {
   // Define any auth fields your app requires here. The user will be prompted to enter this info when
   // they connect their account.
   fields: [
+  {
+		key: 'connection_label',
+		type: 'string',
+		required: true,
+		helpText: 'A label to help you remember your accounts.'
+	  },		
   {
 		key: 'email',
 		type: 'string',
@@ -104,7 +111,7 @@ module.exports = {
   // The test method allows Zapier to verify that the credentials a user provides are valid. We'll execute this
   // method whenver a user connects their account for the first time.
   test: testAuth,
-  connectionLabel: '{{bundle.authData.email}} ({{bundle.authData.app_id}})',
+  connectionLabel: '{{bundle.authData.connection_label}}',
   // The method that will exchange the fields provided by the user for session credentials.
   sessionConfig: {
     perform: getAuthToken
