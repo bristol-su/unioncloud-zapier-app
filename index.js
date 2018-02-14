@@ -1,5 +1,7 @@
 const authentication = require('./authentication');
 const searchstudentid = require('./searches/searchstudentid');
+const getugnames = require('./triggers/getugnames')
+const newugmembership = require('./triggers/newugmembership');
 
 // To include the session key header on all outbound requests, simply define a function here.
 // It runs runs before each request is sent out, allowing you to make tweaks to the request in a centralized spot
@@ -43,6 +45,8 @@ const App = {
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
+	  [getugnames.key]: getugnames,
+	  [newugmembership.key]: newugmembership
   },
 
   // If you want your searches to show up, you better include it here!

@@ -104,6 +104,7 @@ module.exports = {
   // The test method allows Zapier to verify that the credentials a user provides are valid. We'll execute this
   // method whenver a user connects their account for the first time.
   test: testAuth,
+  connectionLabel: '{{bundle.authData.email}} ({{bundle.authData.app_id}})',
   // The method that will exchange the fields provided by the user for session credentials.
   sessionConfig: {
     perform: getAuthToken

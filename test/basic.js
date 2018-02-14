@@ -1,14 +1,13 @@
 require('should');
 const exampleauth = require('../authdata')
 const zapier = require('zapier-platform-core');
-
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
 var authtok = "";
 describe('Attempting Authentication', () => {
   it('Username and password accepted, auth token collected', (done) => {
     // Try changing the values of username or password to see how the test method behaves
-    const bundle = {
+	  const bundle = {
       authData: {
         email: exampleauth.email,
         password: exampleauth.password,
@@ -45,3 +44,41 @@ describe('Searching for a user by id (using tt15951)', () => {
       .catch(done);
   });
 });
+
+describe('Testing for a new UserGroup Membership', () => {
+	  it('returns new ug membership', (done) => {
+		  const bundle = {
+	      authData: {
+	        auth_token: authtok
+	      },
+		  inputData: {
+			  ugid: '382125'
+		  }
+	    };
+
+	    appTester(App.triggers.newugmembership.operation.perform, bundle)
+	      .then((resp) => {
+			  console.log(resp);
+	        done();
+	      })
+	      .catch(done);
+	  });
+	});
+
+describe('Getting all UserGroup Names', () => {
+	  it('returns all usergroup names', (done) => {
+		  const bundle = {
+	      authData: {
+	        auth_token: authtok
+	      }
+	    };
+
+	    appTester(App.triggers.ugnames.operation.perform, bundle)
+	      .then((resp) => {
+			  console.log(resp);
+	        done();
+	      })
+	      .catch(done);
+	  });
+	});
+
