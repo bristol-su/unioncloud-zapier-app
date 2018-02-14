@@ -19,4 +19,13 @@ To run on a local machine, change 'bristol.unioncloud.org' to your unions domain
       </li>
     </ul>  
   </li>
+  <li>Triggers
+    <ul>
+      <li>Triggers on new UserGroup Membership
+        <ul>
+          <li>When a userGroup Membership is created (i.e. someone is added to a UserGroup), this trigger recieves the data</li>
+        </ul>  
+      </li>
+    </ul>  
+  </li>
 </ul>
