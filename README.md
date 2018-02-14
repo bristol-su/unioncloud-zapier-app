@@ -1,0 +1,22 @@
+An integration of Unioncloud, the NUS digital platform, and Zapier. Currently configured for Bristol Student Union.
+
+To run on a local machine, change 'bristol.unioncloud.org' to your unions domain.
+
+<b><h3>Features</h3></b>
+
+<ul>
+  <li>Authentication
+    <ul>
+      <li>Authenticates a user, taking an email and password for a UnionCloud account and an app ID and password. Uses session authentication</li>
+    </ul>
+  </li>
+  <li>Searches
+    <ul>
+      <li>Search by Student ID
+        <ul>
+          <li>Returns the basic information for a given student id. Takes student ID as the only argument</li>
+        </ul>  
+      </li>
+    </ul>  
+  </li>
+</ul>
