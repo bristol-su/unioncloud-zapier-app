@@ -38,7 +38,6 @@ describe('Searching for a user by id (using tt15951)', () => {
 
     appTester(App.searches.searchstudentid.operation.perform, bundle)
       .then((resp) => {
-		  console.log(resp);
         done();
       })
       .catch(done);
@@ -58,7 +57,6 @@ describe('Testing for a new UserGroup Membership', () => {
 
 	    appTester(App.triggers.newugmembership.operation.perform, bundle)
 	      .then((resp) => {
-			  console.log(resp);
 	        done();
 	      })
 	      .catch(done);
@@ -75,10 +73,27 @@ describe('Getting all UserGroup Names', () => {
 
 	    appTester(App.triggers.ugnames.operation.perform, bundle)
 	      .then((resp) => {
-			  console.log(resp);
 	        done();
 	      })
 	      .catch(done);
 	  });
 	});
 
+describe('Search for a user by UID', () => {
+	  it('returns specific user', (done) => {
+		  const bundle = {
+		      authData: {
+		        auth_token: authtok,
+		      },
+			  inputData: {
+				  uid: '2845746',
+			  }
+		  };
+	    appTester(App.searches.getuserbyuid.operation.perform, bundle)
+	      .then((resp) => {
+			  console.log(resp);
+	        done();
+	      })
+	      .catch(done);
+	  });
+	});

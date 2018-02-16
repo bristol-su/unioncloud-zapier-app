@@ -1,5 +1,6 @@
 const authentication = require('./authentication');
 const searchstudentid = require('./searches/searchstudentid');
+const getbyuid = require('./searches/getbyuid');
 const getugnames = require('./triggers/getugnames')
 const newugmembership = require('./triggers/newugmembership');
 
@@ -51,7 +52,8 @@ const App = {
 
   // If you want your searches to show up, you better include it here!
   searches: {
-	  [searchstudentid.key]: searchstudentid
+	  [searchstudentid.key]: searchstudentid,
+	  [getbyuid.key]: getbyuid
   },
 
   // If you want your creates to show up, you better include it here!

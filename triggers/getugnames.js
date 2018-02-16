@@ -7,7 +7,6 @@ const fetchNames = (z, bundle) => {
   
   return z.request(request)
     .then((response) => {
-    	console.log(response);
       var namesArray = JSON.parse(response.content).data;
       returningArray = [];
       namesArray.forEach(function(ugdata){
@@ -17,7 +16,6 @@ const fetchNames = (z, bundle) => {
     	  };
     	  returningArray.push(items);
       });
-      console.log(returningArray);
       return returningArray;
     });
 };
