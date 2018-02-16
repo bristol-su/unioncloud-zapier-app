@@ -6,7 +6,6 @@ const testAuth = (z, bundle) => {
 	var tohash = bundle.authData.email + bundle.authData.password + bundle.authData.app_id + moment().unix() + bundle.authData.app_password;
 	 var hash = z.hash('sha256', tohash.toString());
 	 const url = `https://bristol.unioncloud.org/api/authenticate`;
-	 console.log(bundle);
 	 const options = ({
 		method: 'POST',
 		form: {
