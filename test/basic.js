@@ -5,7 +5,7 @@ const App = require('../index');
 const appTester = zapier.createAppTester(App);
 var authtok = "";
 describe('Attempting Authentication', () => {
-  it('Username and password accepted, auth token collected', (done) => {
+  it('collects an auth token', (done) => {
     // Try changing the values of username or password to see how the test method behaves
 	  const bundle = {
       authData: {
@@ -24,7 +24,9 @@ describe('Attempting Authentication', () => {
       .catch(done);
   });
 });
-console.log("No test available on local testing for ensuring a 401 error leads to an auth token refresh.")
+console.log("No test available on local testing for ensuring a 401 error leads to an auth token refresh.");
+
+
 describe('Searching for a user by id (using tt15951)', () => {
   it('returns user details', (done) => {
 	  const bundle = {
