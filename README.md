@@ -17,6 +17,11 @@ To run on a local machine, change 'bristol.unioncloud.org' to your unions domain
           <li>Returns the basic information for a given student id. Takes student ID as the only argument</li>
         </ul>  
       </li>
+      <li>Search by uID
+        <ul>
+          <li>Returns the basic information for a given uID. Takes uID as the only argument.</li>
+        </ul>  
+      </li>
     </ul>  
   </li>
   <li>Triggers
