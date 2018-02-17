@@ -4,11 +4,13 @@ const zapier = require('zapier-platform-core');
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
 var authtok = "";
+var domain = "";
 describe('Attempting Authentication', () => {
   it('collects an auth token', (done) => {
     // Try changing the values of username or password to see how the test method behaves
 	  const bundle = {
       authData: {
+    	domain: exampleauth.domain,
         email: exampleauth.email,
         password: exampleauth.password,
 		app_id: exampleauth.app_id,
@@ -19,6 +21,7 @@ describe('Attempting Authentication', () => {
     appTester(App.authentication.sessionConfig.perform, bundle)
       .then((newAuthData) => {
 		authtok = newAuthData.auth_token;
+		domain = newAuthData.domain;
         done();
       })
       .catch(done);
@@ -31,7 +34,8 @@ describe('Searching for a user by id (using tt15951)', () => {
   it('returns user details', (done) => {
 	  const bundle = {
       authData: {
-        auth_token: authtok
+        auth_token: authtok,
+        domain: domain
       },
 	  inputData: {
 		  searchData: 'tt15951'
@@ -50,7 +54,8 @@ describe('Testing for a new UserGroup Membership', () => {
 	  it('returns new ug membership', (done) => {
 		  const bundle = {
 	      authData: {
-	        auth_token: authtok
+	        auth_token: authtok,
+	        domain: domain
 	      },
 		  inputData: {
 			  ugid: '382125'
@@ -69,7 +74,8 @@ describe('Getting all UserGroup Names', () => {
 	  it('returns all usergroup names', (done) => {
 		  const bundle = {
 	      authData: {
-	        auth_token: authtok
+	        auth_token: authtok,
+	        domain: domain
 	      }
 	    };
 
@@ -86,6 +92,7 @@ describe('Search for a user by UID', () => {
 		  const bundle = {
 		      authData: {
 		        auth_token: authtok,
+		        domain: domain
 		      },
 			  inputData: {
 				  uid: '2845746',

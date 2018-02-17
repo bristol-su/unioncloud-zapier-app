@@ -30,7 +30,7 @@ module.exports = {
     perform: (z, bundle) => {
 	  return z.request({
 		  method: 'GET',
-		  url: 'https://bristol.unioncloud.org/api/user_groups/'+bundle.inputData.ugid+'/user_group_memberships?mode=full',
+		  url: 'https://'+bundle.authData.domain+'/api/user_groups/'+bundle.inputData.ugid+'/user_group_memberships?mode=full',
 		  headers: {
 			  'accept-version': 'v1',
 			  'Content-Type': 'application/json',

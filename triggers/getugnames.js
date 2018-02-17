@@ -2,7 +2,7 @@
 const fetchNames = (z, bundle) => {
 
   const request = {
-    url: 'https://bristol.unioncloud.org/api/user_groups?mode=basic'
+    url: 'https://'+bundle.authData.domain+'/api/user_groups?mode=basic'
   };
   
   return z.request(request)

@@ -24,7 +24,7 @@ module.exports = {
         	  return z.request({
         		  method: 'GET',
         	      //url: 'https://requestb.in/zgid4ozg',
-        		  url: 'https://bristol.unioncloud.org/api/users/'+bundle.inputData.uid+'?mode=basic',
+        		  url: 'https://'+bundle.authData.domain+'/api/users/'+bundle.inputData.uid+'?mode=basic',
         	      headers: {
         		      'accept-version': 'v1',
 					  'Content-Type': 'application/json',

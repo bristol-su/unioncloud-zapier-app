@@ -28,7 +28,7 @@ module.exports = {
 			  };
         	  return z.request({
         		  method: 'POST',
-        	      url: 'https://bristol.unioncloud.org/api/users/search?mode=basic',
+        	      url: 'https://'+bundle.authData.domain+'/api/users/search?mode=basic',
         	      headers: {
         		      'accept-version': 'v1',
 					   'Content-Type': 'application/json',

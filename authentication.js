@@ -5,7 +5,7 @@ const testAuth = (z, bundle) => {
   // In this example, we'll hit httpbin, which validates the Authorization Header against the arguments passed in the URL path
 	var tohash = bundle.authData.email + bundle.authData.password + bundle.authData.app_id + moment().unix() + bundle.authData.app_password;
 	 var hash = z.hash('sha256', tohash.toString());
-	 const url = `https://bristol.unioncloud.org/api/authenticate`;
+	 const url = `https://`+bundle.authData.domain+`/api/authenticate`;
 	 const options = ({
 		method: 'POST',
 		form: {
@@ -39,7 +39,7 @@ const testAuth = (z, bundle) => {
 const getAuthToken = (z, bundle) => {
   var tohash = bundle.authData.email + bundle.authData.password + bundle.authData.app_id + moment().unix() + bundle.authData.app_password;
  var hash = z.hash('sha256', tohash.toString());
- const url = `https://bristol.unioncloud.org/api/authenticate`;
+ const url = `https://`+bundle.authData.domain+`/api/authenticate`;
  const options = {
 		method: 'POST',
 		form: {
@@ -64,7 +64,8 @@ return z.request(url, options)
 		if(resp == "auth_token"){
 			return {
 			  auth_token: responses[resp] || 'new auth token!',
-			  connection_label: bundle.authData.connection_label || 'Connection Label'
+			  connection_label: bundle.authData.connection_label || 'Connection Label',
+			  domain: bundle.authData.domain || 'Your Domain'
 			};
 		}
 	  }
@@ -82,6 +83,12 @@ module.exports = {
 		required: true,
 		helpText: 'A label to help you remember your accounts.'
 	  },		
+  {
+		key: 'domain',
+		type: 'string',
+		required: true,
+		helpText: 'Domain of your union. For example, bristol.unioncloud.org'
+	  },
   {
 		key: 'email',
 		type: 'string',
