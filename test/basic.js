@@ -44,6 +44,7 @@ describe('Searching for a user by id (using tt15951)', () => {
 
     appTester(App.searches.searchstudentid.operation.perform, bundle)
       .then((resp) => {
+    	  console.log(resp);
         done();
       })
       .catch(done);

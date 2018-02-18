@@ -1,3 +1,4 @@
+var caps = require('./../scripts/processArrays');
 module.exports = {
   key: 'searchstudentid',
 
@@ -28,7 +29,7 @@ module.exports = {
 			  };
         	  return z.request({
         		  method: 'POST',
-        	      url: 'https://'+bundle.authData.domain+'/api/users/search?mode=basic',
+        	      url: 'https://'+bundle.authData.domain+'/api/users/search?mode=standard',
         	      headers: {
         		      'accept-version': 'v1',
 					   'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ module.exports = {
 					throw new Error(`Unexpected status code ${response.status}`);
 				  }
 				  var data = z.JSON.parse(response.content).data;
-					return data;
+					return caps(data);
 					
 				});
          },

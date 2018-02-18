@@ -1,8 +1,9 @@
 // fetches a list of records from the endpoint
+var caps = require('./../scripts/processArrays');
 const fetchNames = (z, bundle) => {
 
   const request = {
-    url: 'https://'+bundle.authData.domain+'/api/user_groups?mode=basic'
+    url: 'https://'+bundle.authData.domain+'/api/user_groups?mode=standard'
   };
   
   return z.request(request)
@@ -16,7 +17,7 @@ const fetchNames = (z, bundle) => {
     	  };
     	  returningArray.push(items);
       });
-      return returningArray;
+      return caps(returningArray);
     });
 };
 

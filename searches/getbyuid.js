@@ -1,3 +1,4 @@
+var caps = require('./../scripts/processArrays');
 module.exports = {
   key: 'getuserbyuid',
 
@@ -24,7 +25,7 @@ module.exports = {
         	  return z.request({
         		  method: 'GET',
         	      //url: 'https://requestb.in/zgid4ozg',
-        		  url: 'https://'+bundle.authData.domain+'/api/users/'+bundle.inputData.uid+'?mode=basic',
+        		  url: 'https://'+bundle.authData.domain+'/api/users/'+bundle.inputData.uid+'?mode=standard',
         	      headers: {
         		      'accept-version': 'v1',
 					  'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ module.exports = {
 					throw new Error(`Unexpected status code ${response.status}`);
 				  }
 				  var data = z.JSON.parse(response.content).data;
-					return data;
+				  return caps(data);
 					
 				});
          },

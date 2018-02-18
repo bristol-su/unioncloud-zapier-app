@@ -1,5 +1,6 @@
 // We recommend writing your triggers separate like this and rolling them
 // into the App definition at the end.
+var caps = require('./../scripts/processArrays');
 module.exports = {
   key: 'newugmembership',
 
@@ -41,7 +42,7 @@ module.exports = {
 			  throw new Error(`Unexpected status code ${response.status}`);
 		  }
 		  var data = z.JSON.parse(response.content).data;
-		  return data;
+		  return caps(data);
 		
 	  });
     },
