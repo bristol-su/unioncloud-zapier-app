@@ -3,7 +3,7 @@ var caps = require('./../scripts/processArrays');
 const fetchNames = (z, bundle) => {
 
   const request = {
-    url: 'https://'+bundle.authData.domain+'/api/user_groups?mode=standard'
+    url: 'https://'+bundle.authData.domain+'/api/user_groups?page='+bundle.meta.page+'&mode=standard'
   };
   
   return z.request(request)
@@ -30,12 +30,12 @@ module.exports = {
     hidden: true,
   },
 
-  operation: {
+  operation: {		
     // since this is a "hidden" trigger, there aren't any inputFields needed
-    perform: fetchNames//,
+    perform: fetchNames,
     // the folowing is a "hint" to the Zap Editor that this trigger returns data "in pages", and
     //   that the UI should display an option to "load next page" to the human.
-    //canPaginate: true
+    canPaginate: true
   },
 
 };
