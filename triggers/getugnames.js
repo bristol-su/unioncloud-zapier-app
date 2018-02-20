@@ -3,12 +3,19 @@ var caps = require('./../scripts/processArrays');
 const fetchNames = (z, bundle) => {
 
   const request = {
-    url: 'https://'+bundle.authData.domain+'/api/user_groups?page='+bundle.meta.page+'&mode=standard'
+    url: 'https://'+bundle.authData.domain+'/api/user_groups?mode=standard'
   };
   
   return z.request(request)
     .then((response) => {
+	if (response.status >= 300) {
+		throw new Error("Searching for user failed.");
+	  }
       var namesArray = JSON.parse(response.content).data;
+      if (namesArray == null){
+    	  throw new Error("Could not find any User Groups.");
+    	  return false;
+      }
       returningArray = [];
       namesArray.forEach(function(ugdata){
     	  items = {

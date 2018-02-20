@@ -32,9 +32,12 @@ module.exports = {
         		  },
         	    }).then(response => {
 				  if (response.status >= 300) {
-					throw new Error(`Unexpected status code ${response.status}`);
+					throw new Error("Failed getting a user by uID.");
 				  }
 				  var data = z.JSON.parse(response.content).data;
+				  if(data == null){
+					  throw new Error("No users found.")
+				  }
 				  return caps(data);
 					
 				});

@@ -37,10 +37,13 @@ module.exports = {
         		  body: options
         	    }).then(response => {
 				  if (response.status >= 300) {
-					throw new Error(`Unexpected status code ${response.status}`);
+					throw new Error("Searching for user failed.");
 				  }
 				  var data = z.JSON.parse(response.content).data;
-					return caps(data);
+				  if(data == null){
+					  throw new Error("No users found.");
+				  }
+				  return caps(data);
 					
 				});
          },

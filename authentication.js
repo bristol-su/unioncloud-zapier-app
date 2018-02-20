@@ -23,7 +23,7 @@ const testAuth = (z, bundle) => {
 	return z.request(url, options)
 		.then(response => {
 		  if (response.status >= 401) {
-			throw new Error(`Unexpected status code ${response.status}`);
+			throw new Error("Authentication Failed");
 		  }
 		    var responses = z.JSON.parse(response.content).response;
 	  for(var resp in responses){
@@ -55,20 +55,19 @@ const getAuthToken = (z, bundle) => {
 return z.request(url, options)
 	.then(response => {
 	  if (response.status >= 300) {
-		throw new Error(`Unexpected status code ${response.status}`);
+		throw new Error("Authentication Failed.");
 	  }
-	  //console.log(response.json.response.auth_token);
-	  // do any custom processing of recipes here...
 	  var responses = z.JSON.parse(response.content).response;
 	  for(var resp in responses){
 		if(resp == "auth_token"){
 			return {
-			  auth_token: responses[resp] || 'new auth token!',
+			  auth_token: responses[resp] || 'Auth Token',
 			  connection_label: bundle.authData.connection_label || 'Connection Label',
 			  domain: bundle.authData.domain || 'Your Domain'
 			};
 		}
 	  }
+	  throw new Error("Authentication Failed");
 	});
 };
 

@@ -39,9 +39,12 @@ module.exports = {
 	  }).then(response => {
 		  console.log(response)
 		  if (response.status >= 300) {
-			  throw new Error(`Unexpected status code ${response.status}`);
+			  throw new Error("Error finding new UserGroup Memberships.");
 		  }
 		  var data = z.JSON.parse(response.content).data;
+		  if(data == null){
+			  throw new Error("No usergroups found");
+		  }
 		  return caps(data);
 		
 	  });
