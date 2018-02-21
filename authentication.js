@@ -1,8 +1,16 @@
 var moment = require('./scripts/moment');
 const testAuth = (z, bundle) => {
-  // Normally you want to make a request to an endpoint that is either specifically designed to test auth, or one that
-  // every user will have access to, such as an account or profile endpoint like /me.
-  // In this example, we'll hit httpbin, which validates the Authorization Header against the arguments passed in the URL path
+  /* Tests the authentication.
+   * Unioncloud requires the following request body to be sent for an authentication request
+   * email	This field is the email of the user account in UnionCloud used to access the API
+   *password	This field is the password of the user account in UnionCloud used to access the API
+   *app_id	This field is the developer name as set up in UnionCloud used to access the API
+   *date_stamp	Unix current date time stamp
+   *hash	SHA 256 Hash of the string concatenation "email"+"password"+"app_id"+"date_stamp"+"app_ password
+   *
+   *The function throws an error if the status is a 401, otherwise it will check the auth_token is present
+   *in the response
+   */
 	var tohash = bundle.authData.email + bundle.authData.password + bundle.authData.app_id + moment().unix() + bundle.authData.app_password;
 	 var hash = z.hash('sha256', tohash.toString());
 	 const url = `https://`+bundle.authData.domain+`/api/authenticate`;
@@ -15,10 +23,7 @@ const testAuth = (z, bundle) => {
 			date_stamp: moment().unix(),
 			hash: hash
 		}
-	  });
-		//  return responsePromise
-		//    .then(response => z.JSON.parse(response.content));
-	 
+	  }); 
 
 	return z.request(url, options)
 		.then(response => {
@@ -37,6 +42,8 @@ const testAuth = (z, bundle) => {
   // This method can return any truthy value to indicate the credentials are valid.
 
 const getAuthToken = (z, bundle) => {
+	//This does the same as testAuth, but returns the bundle variables for the 
+	//authtoken, connection label and domain.
   var tohash = bundle.authData.email + bundle.authData.password + bundle.authData.app_id + moment().unix() + bundle.authData.app_password;
  var hash = z.hash('sha256', tohash.toString());
  const url = `https://`+bundle.authData.domain+`/api/authenticate`;
@@ -73,8 +80,7 @@ return z.request(url, options)
 
 module.exports = {
   type: 'session',
-  // Define any auth fields your app requires here. The user will be prompted to enter this info when
-  // they connect their account.
+  // Fields required for authentication
   fields: [
   {
 		key: 'connection_label',
@@ -113,12 +119,10 @@ module.exports = {
 		helpText: 'Your App Password'
 	  }
   ],
-  // The test method allows Zapier to verify that the credentials a user provides are valid. We'll execute this
-  // method whenver a user connects their account for the first time.
+  //test is called to verify whether the login worked or not
   test: testAuth,
   connectionLabel: '{{bundle.authData.connection_label}}',
-  // The method that will exchange the fields provided by the user for session credentials.
-  sessionConfig: {
+  sessionConfig: { //Method to call to get auth token
     perform: getAuthToken
   }
 };

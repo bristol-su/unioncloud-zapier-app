@@ -1,18 +1,12 @@
 var caps = require('./../scripts/processArrays');
 module.exports = {
   key: 'getuserbyuid',
-
-  // You'll want to provide some helpful display labels and descriptions
-  // for users. Zapier will put them into the UX.
   noun: 'Users',
   display: {
     label: 'Get a User by uID.',
     description: 'Fetch details of a specific user by uID'
   },
-
-  // `operation` is where we make the call to your API to do the search
 	operation: {
-        // an array of objects is the simplest way
         inputFields: [
           {
             key: 'uid',
@@ -24,29 +18,25 @@ module.exports = {
          perform: (z, bundle) => {
         	  return z.request({
         		  method: 'GET',
-        	      //url: 'https://requestb.in/zgid4ozg',
         		  url: 'https://'+bundle.authData.domain+'/api/users/'+bundle.inputData.uid+'?mode=standard',
         	      headers: {
         		      'accept-version': 'v1',
 					  'Content-Type': 'application/json',
         		  },
         	    }).then(response => {
-				  if (response.status >= 300) {
+				  if (response.status >= 300) { //Something went wrong!
 					throw new Error("Failed getting a user by uID.");
 				  }
 				  var data = z.JSON.parse(response.content).data;
-				  if(data == null){
+				  if(data == null){ //No users with that uid
 					  throw new Error("No users found.")
 				  }
-				  return caps(data);
+				  return caps(data); //fix capitalisation
 					
 				});
          },
          
-			// In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
-			// from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
-			// returned records, and have obviously dummy values that we can show to any user.
-			sample: {
+			sample: { //Sample Data
 			  
 				surname: 'Twigger',
 				uid: '2845746',
@@ -56,17 +46,10 @@ module.exports = {
 				id:	'tt15951',
 			},
 
-			// If the resource can have fields that are custom on a per-user basis, define a function to fetch the custom
-			// field definitions. The result will be used to augment the sample.
-			// outputFields: () => { return []; }
-			// Alternatively, a static field definition should be provided, to specify labels for the fields
 			outputFields: [
-			  {key: 'surname', label: 'Surname'},
-			  {key: 'uid', label: 'uID'},
-			  {key: 'updated_at', label: 'Last Updated'},
-			  {key: 'email', label: 'Email Address'},
-			  {key: 'forename', label: 'Forename'},
-			  {key: 'id', label: 'Student ID'}
+				  //Can put keys here to better name them for a user
+				  //{key: 'surname', label: 'Surname'}
+					//Zapier will format keys by capitalising them and getting rid of underscores etc
 			]
 		  }
 };

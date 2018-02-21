@@ -1,18 +1,13 @@
-var caps = require('./../scripts/processArrays');
+var caps = require('./../scripts/processArrays'); //Capitalise the names correctly.
 module.exports = {
   key: 'searchstudentid',
-
-  // You'll want to provide some helpful display labels and descriptions
-  // for users. Zapier will put them into the UX.
   noun: 'Users',
   display: {
     label: 'Search for a User by Student ID.',
     description: 'Search for a user by Student ID and get all information UnionCloud holds on the user.'
   },
 
-  // `operation` is where we make the call to your API to do the search
 	operation: {
-        // an array of objects is the simplest way
         inputFields: [
           {
             key: 'searchData',
@@ -22,7 +17,7 @@ module.exports = {
           },
         ],
          perform: (z, bundle) => {
-			  const options = {
+			  const options = { //set the body to have an id given
 				  data: {
 					  id: bundle.inputData.searchData
 				  }
@@ -30,27 +25,25 @@ module.exports = {
         	  return z.request({
         		  method: 'POST',
         	      url: 'https://'+bundle.authData.domain+'/api/users/search?mode=standard',
-        	      headers: {
+        	      headers: {//required headers for the request
         		      'accept-version': 'v1',
 					   'Content-Type': 'application/json',
         		  },
         		  body: options
         	    }).then(response => {
-				  if (response.status >= 300) {
+				  if (response.status >= 300) { //Unexpected status code
 					throw new Error("Searching for user failed.");
 				  }
 				  var data = z.JSON.parse(response.content).data;
-				  if(data == null){
+				  if(data == null){ //happens for no users
 					  throw new Error("No users found.");
 				  }
-				  return caps(data);
+				  return caps(data); //capitalise the name correctly
 					
 				});
          },
          
-			// In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
-			// from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
-			// returned records, and have obviously dummy values that we can show to any user.
+			// Sample Data
 			sample: {
 			  
 				surname: 'Twigger',
@@ -61,17 +54,10 @@ module.exports = {
 				id:	'tt15951',
 			},
 
-			// If the resource can have fields that are custom on a per-user basis, define a function to fetch the custom
-			// field definitions. The result will be used to augment the sample.
-			// outputFields: () => { return []; }
-			// Alternatively, a static field definition should be provided, to specify labels for the fields
 			outputFields: [
-			  {key: 'surname', label: 'Surname'},
-			  {key: 'uid', label: 'Uid At'},
-			  {key: 'updated_at', label: 'Last Updated'},
-			  {key: 'email', label: 'Email Address'},
-			  {key: 'forename', label: 'Forename'},
-			  {key: 'id', label: 'Student ID'}
+			  //Can put keys here to better name them for a user
+			  //{key: 'surname', label: 'Surname'}
+				//Zapier will format keys by capitalising them and getting rid of underscores etc
 			]
 		  }
 };

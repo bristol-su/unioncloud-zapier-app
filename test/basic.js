@@ -3,13 +3,12 @@ const exampleauth = require('../authdata')
 const zapier = require('zapier-platform-core');
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
-var authtok = "";
-var domain = "";
-describe('Attempting Authentication', () => {
+var authtok = ""; //save the auth token her
+var domain = ""; //save the domain here 
+describe('Attempting Authentication', () => { //Try to authenticate
   it('collects an auth token', (done) => {
-    // Try changing the values of username or password to see how the test method behaves
 	  const bundle = {
-      authData: {
+      authData: { //Required auth data, usually got from the user
     	domain: exampleauth.domain,
         email: exampleauth.email,
         password: exampleauth.password,
@@ -20,17 +19,18 @@ describe('Attempting Authentication', () => {
 
     appTester(App.authentication.sessionConfig.perform, bundle)
       .then((newAuthData) => {
-		authtok = newAuthData.auth_token;
+		authtok = newAuthData.auth_token; //Set the auth token and domain
 		domain = newAuthData.domain;
         done();
       })
       .catch(done);
   });
 });
+//No found way to test what happens with an expired auth_token
 console.log("No test available on local testing for ensuring a 401 error leads to an auth token refresh.");
 
 
-describe('Searching for a user by id (using tt15951)', () => {
+describe('Searching for a user by id (using tt15951)', () => {//search for a user by id
   it('returns user details', (done) => {
 	  const bundle = {
       authData: {

@@ -1,22 +1,13 @@
-// We recommend writing your triggers separate like this and rolling them
-// into the App definition at the end.
-var caps = require('./../scripts/processArrays');
+var caps = require('./../scripts/processArrays'); //Capitalisation
 module.exports = {
   key: 'newugmembership',
-
-  // You'll want to provide some helpful display labels and descriptions
-  // for users. Zapier will put them into the UX.
   noun: 'ugmembership',
   display: {
     label: 'New UserGroup Membership',
     description: 'Trigger when a new UseGroup Membership is created in a specific UserGroup.'
   },
-
-  // `operation` is where the business logic goes.
   operation: {
-
-    // `inputFields` can define the fields a user could provide,
-    // we'll pass them in as `bundle.inputData` later.
+//Fields for the user to fill
     inputFields: [
     	 {
              key: 'ugid',
@@ -32,48 +23,47 @@ module.exports = {
 	  return z.request({
 		  method: 'GET',
 		  url: 'https://'+bundle.authData.domain+'/api/user_groups/'+bundle.inputData.ugid+'/user_group_memberships?mode=full',
-		  headers: {
+		  headers: { //required headers
 			  'accept-version': 'v1',
 			  'Content-Type': 'application/json',
 		  },
 	  }).then(response => {
 		  console.log(response)
-		  if (response.status >= 300) {
+		  if (response.status >= 300) { //Unexpected data
 			  throw new Error("Error finding new UserGroup Memberships.");
 		  }
 		  var data = z.JSON.parse(response.content).data;
-		  if(data == null){
-			  throw new Error("No usergroups found");
+		  if(data == null){ //No usergroup memberships found
+			  throw new Error("No UserGroup Memberships found");
 		  }
 		  return caps(data);
 		
 	  });
     },
     
-    // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
-    // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
-    // returned records, and have obviously dummy values that we can show to any user.
+    //Example Data
     sample: {
-      id: 1,
-      createdAt: 1472069465,
-      name: 'Best Spagetti Ever',
-      authorId: 1,
-      directions: '1. Boil Noodles\n2.Serve with sauce',
-      style: 'italian'
+    	surname: "Twigger",
+    	ug_name: "UserGroup Name",
+    	end_date: "11-04-2018",
+    	ug_type: "Custom",
+    	ugm_id:	"65550699",
+    	enabled: "true",
+    	updated_at: "16-02-2018 13:52:10",
+    	email: "tt159510@bristol.ac.uk",
+    	ug_id: "382125",
+    	forename: "Toby",
+    	id:	"tt15951",
+    	ugm_updated_at:	"14-02-2018 16:52:15",
+    	start_date:	"14-02-2018",
+    	uid: "2845746"
     },
-
-    // If the resource can have fields that are custom on a per-user basis, define a function to fetch the custom
-    // field definitions. The result will be used to augment the sample.
-    // outputFields: () => { return []; }
-    // Alternatively, a static field definition should be provided, to specify labels for the fields
+    
     outputFields: [
-      {key: 'id', label: 'ID'},
-      {key: 'createdAt', label: 'Created At'},
-      {key: 'name', label: 'Name'},
-      {key: 'directions', label: 'Directions'},
-      {key: 'authorId', label: 'Author ID'},
-      {key: 'style', label: 'Style'}
-    ]
+		  //Can put keys here to better name them for a user
+		  //{key: 'surname', label: 'Surname'}
+			//Zapier will format keys by capitalising them and getting rid of underscores etc
+	]
   },
 
 };

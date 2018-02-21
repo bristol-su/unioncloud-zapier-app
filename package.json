@@ -2,10 +2,10 @@
   "name": "unioncloud",
   "version": "1.0.0",
   "description": "An app to connect with UnionCloud.",
-  "repository": "zapier/zapier-platform-example-app-session-auth",
-  "homepage": "https://zapier.com/",
-  "author": "Bryan Helmig <bryan@zapier.com>",
-  "license": "BSD-3-Clause",
+  "repository": "https://github.com/tobytwigger/unioncloud-zapier-app",
+  "homepage": "https://github.com/tobytwigger/unioncloud-zapier-app",
+  "author": "Toby Twigger <tt15951@bristol.ac.uk>",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --recursive"
