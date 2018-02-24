@@ -4,6 +4,7 @@ const searchstudentid = require('./searches/searchstudentid');
 const getbyuid = require('./searches/getbyuid');
 const getugnames = require('./triggers/getugnames')
 const newugmembership = require('./triggers/newugmembership');
+const createugmembership = require('./creates/createugm');
 
 //Runs before any request is sent
 const includeSessionKeyHeader = (request, z, bundle) => {
@@ -55,6 +56,7 @@ const App = {
   },
 
   creates: {
+	  [createugmembership.key]: createugmembership //Create a new usergroup membership
   }
 };
 

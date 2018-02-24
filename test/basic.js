@@ -19,6 +19,8 @@ describe('Attempting Authentication', () => { //Try to authenticate
 
     appTester(App.authentication.sessionConfig.perform, bundle)
       .then((newAuthData) => {
+    	  newAuthData.should.have.property('auth_token');
+    	  newAuthData.should.have.property('domain');
 		authtok = newAuthData.auth_token; //Set the auth token and domain
 		domain = newAuthData.domain;
         done();
@@ -102,6 +104,30 @@ describe('Search for a user by UID', () => {
 	    appTester(App.searches.getuserbyuid.operation.perform, bundle)
 	      .then((resp) => {
 			  console.log(resp);
+	        done();
+	      })
+	      .catch(done);
+	  });
+	});
+
+describe('Create a UserGroup Membership', () => {
+	  it('creates a usergroup membership', (done) => {
+		  const bundle = {
+		      authData: {
+		        auth_token: authtok,
+		        domain: domain
+		      },
+			  inputData: {
+				  uid: '2845746',
+				  ug_id: '382125',
+				  expiry: '22/09/2019',
+			  }
+		  };
+	    appTester(App.creates.createugm.operation.perform, bundle)
+	      .then((resp) => {
+			  resp.should.have.property('uid');
+			  resp.should.have.property('ug_id');
+			  resp.should.have.property('ugm_id');
 	        done();
 	      })
 	      .catch(done);
