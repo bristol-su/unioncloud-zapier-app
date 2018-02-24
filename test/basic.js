@@ -3,6 +3,7 @@ const zapier = require('zapier-platform-core');
 zapier.tools.env.inject();
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
+
 describe('Attempting Authentication', () => { //Try to authenticate
   it('collects an auth token', (done) => {
 	  const bundle = {
@@ -32,7 +33,6 @@ console.log("No test available on local testing for ensuring a 401 error leads t
 
 describe('Searching for a user by id (using tt15951)', () => {//search for a user by id
   it('returns user details', (done) => {
-	  console.log(process.env);
 	  const bundle = {
       authData: {
         auth_token: process.env.AUTH_TOKEN,
@@ -42,14 +42,16 @@ describe('Searching for a user by id (using tt15951)', () => {//search for a use
 		  searchData: 'tt15951'
 	  }
     };
-
     appTester(App.searches.searchstudentid.operation.perform, bundle)
-      .then((resp) => {
-    	 // resp.should.have.property('surname');
-    	 // resp.should.have.property('uid');
-    	 // resp.should.have.property('forename');
-    	 // resp.should.have.property('id');
-    	 // resp.should.have.property('email');
+      .then((data) => {
+    	  data.length.should.be.above(0);
+    	  data.forEach(function(user){
+    		  user.should.have.property('surname');
+    		  user.should.have.property('uid');
+    		  user.should.have.property('forename');
+    		  user.should.have.property('id');
+    		  user.should.have.property('email');
+    	  });
         done();
       })
       .catch(done);
@@ -69,7 +71,18 @@ describe('Testing for a new UserGroup Membership', () => {
 	    };
 
 	    appTester(App.triggers.newugmembership.operation.perform, bundle)
-	      .then((resp) => {
+	      .then((data) => {
+	    	  data.length.should.be.above(0);
+	    	  data.forEach(function(membership){
+	    		  membership.should.have.property('id');
+	    		  membership.should.have.property('uid');
+	    		  membership.should.have.property('forename');
+	    		  membership.should.have.property('surname');
+	    		  membership.should.have.property('email');
+	    		  membership.should.have.property('ugm_id');
+	    		  membership.should.have.property('ug_id');
+	    		  membership.should.have.property('ug_name');
+	    	  });
 	        done();
 	      })
 	      .catch(done);
@@ -86,7 +99,12 @@ describe('Getting all UserGroup Names', () => {
 	    };
 
 	    appTester(App.triggers.ugnames.operation.perform, bundle)
-	      .then((resp) => {
+	      .then((data) => {
+	    	  data.length.should.be.above(0);
+	    	  data.forEach(function(usergroup){
+	    		  usergroup.should.have.property('id');
+	    		  usergroup.should.have.property('name');
+	    	  });
 	        done();
 	      })
 	      .catch(done);
@@ -105,8 +123,15 @@ describe('Search for a user by UID', () => {
 			  }
 		  };
 	    appTester(App.searches.getuserbyuid.operation.perform, bundle)
-	      .then((resp) => {
-			  console.log(resp);
+	      .then((data) => {
+	    	  data.length.should.be.above(0);
+	    	  data.forEach(function(user){
+	    		  user.should.have.property('surname');
+	    		  user.should.have.property('uid');
+	    		  user.should.have.property('forename');
+	    		  user.should.have.property('id');
+	    		  user.should.have.property('email');
+	    	  });
 	        done();
 	      })
 	      .catch(done);

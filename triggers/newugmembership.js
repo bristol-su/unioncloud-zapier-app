@@ -28,7 +28,6 @@ module.exports = {
 			  'Content-Type': 'application/json',
 		  },
 	  }).then(response => {
-		  console.log(response)
 		  if (response.status >= 300) { //Unexpected data
 			  throw new Error("Error finding new UserGroup Memberships.");
 		  }
