@@ -1,19 +1,17 @@
 require('should');
-const exampleauth = require('../authdata')
 const zapier = require('zapier-platform-core');
+zapier.tools.env.inject();
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
-var authtok = ""; //save the auth token her
-var domain = ""; //save the domain here 
 describe('Attempting Authentication', () => { //Try to authenticate
   it('collects an auth token', (done) => {
 	  const bundle = {
       authData: { //Required auth data, usually got from the user
-    	domain: exampleauth.domain,
-        email: exampleauth.email,
-        password: exampleauth.password,
-		app_id: exampleauth.app_id,
-		app_password: exampleauth.app_password
+    	domain: process.env.DOMAIN,
+        email: process.env.EMAIL,
+        password: process.env.PASSWORD,
+		app_id: process.env.APP_ID,
+		app_password: process.env.APP_PASSWORD
       }
     };
 
@@ -21,8 +19,8 @@ describe('Attempting Authentication', () => { //Try to authenticate
       .then((newAuthData) => {
     	  newAuthData.should.have.property('auth_token');
     	  newAuthData.should.have.property('domain');
-		authtok = newAuthData.auth_token; //Set the auth token and domain
-		domain = newAuthData.domain;
+		process.env.AUTH_TOKEN = newAuthData.auth_token; //Set the auth token and domain
+		process.env.DOMAIN = newAuthData.domain;
         done();
       })
       .catch(done);
@@ -34,10 +32,11 @@ console.log("No test available on local testing for ensuring a 401 error leads t
 
 describe('Searching for a user by id (using tt15951)', () => {//search for a user by id
   it('returns user details', (done) => {
+	  console.log(process.env);
 	  const bundle = {
       authData: {
-        auth_token: authtok,
-        domain: domain
+        auth_token: process.env.AUTH_TOKEN,
+        domain: process.env.DOMAIN
       },
 	  inputData: {
 		  searchData: 'tt15951'
@@ -46,7 +45,11 @@ describe('Searching for a user by id (using tt15951)', () => {//search for a use
 
     appTester(App.searches.searchstudentid.operation.perform, bundle)
       .then((resp) => {
-    	  console.log(resp);
+    	 // resp.should.have.property('surname');
+    	 // resp.should.have.property('uid');
+    	 // resp.should.have.property('forename');
+    	 // resp.should.have.property('id');
+    	 // resp.should.have.property('email');
         done();
       })
       .catch(done);
@@ -57,8 +60,8 @@ describe('Testing for a new UserGroup Membership', () => {
 	  it('returns new ug membership', (done) => {
 		  const bundle = {
 	      authData: {
-	        auth_token: authtok,
-	        domain: domain
+	        auth_token: process.env.AUTH_TOKEN,
+	        domain: process.env.DOMAIN
 	      },
 		  inputData: {
 			  ugid: '382125'
@@ -77,8 +80,8 @@ describe('Getting all UserGroup Names', () => {
 	  it('returns all usergroup names', (done) => {
 		  const bundle = {
 	      authData: {
-	        auth_token: authtok,
-	        domain: domain
+	        auth_token: process.env.AUTH_TOKEN,
+	        domain: process.env.DOMAIN
 	      }
 	    };
 
@@ -94,8 +97,8 @@ describe('Search for a user by UID', () => {
 	  it('returns specific user', (done) => {
 		  const bundle = {
 		      authData: {
-		        auth_token: authtok,
-		        domain: domain
+		        auth_token: process.env.AUTH_TOKEN,
+		        domain: process.env.DOMAIN
 		      },
 			  inputData: {
 				  uid: '2845746',
@@ -114,8 +117,8 @@ describe('Create a UserGroup Membership', () => {
 	  it('creates a usergroup membership', (done) => {
 		  const bundle = {
 		      authData: {
-		        auth_token: authtok,
-		        domain: domain
+		        auth_token: process.env.AUTH_TOKEN,
+		        domain: process.env.DOMAIN
 		      },
 			  inputData: {
 				  uid: '2845746',
