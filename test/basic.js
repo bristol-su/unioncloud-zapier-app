@@ -133,3 +133,19 @@ describe('Create a UserGroup Membership', () => {
 	      .catch(done);
 	  });
 	});
+
+describe('Get all events', () => {
+	  it('searches for all events', (done) => {
+		  const bundle = {
+		      authData: {
+		        auth_token: authtok,
+		        domain: domain
+		      }
+		  };
+	    appTester(App.triggers.getevents.operation.perform, bundle)
+	      .then((resp) => {
+	        done();
+	      })
+	      .catch(done);
+	  });
+	});

@@ -16,7 +16,7 @@ module.exports = {
           {
 			  key: 'ug_id',
 			  required: true,
-			  dynamic: 'ugnames.id.name', //Auto populate using all usergroups
+			  dynamic: 'ugnames.id.name', //Auto populate using all usergroup names dropdown
 			  altersDynamicFields:true,
 			  label: 'UserGroup',
 			  helpText: 'Please select the UserGroup to add a member to.'
@@ -30,13 +30,14 @@ module.exports = {
           },
         ],
          perform: (z, bundle) => {
-        	  const options = { //set the body to have an id given
+        	  const options = { //set the body to have required data
    				  data: {
    					  uid: bundle.inputData.uid,
    					  ug_id: bundle.inputData.ug_id,
    					  expire_date: bundle.inputData.expiry,
    				  }
    			  };
+        	  //Ensure the date is in the correct format.
         	  var regex = "^(((((0[1-9])|(1\d)|(2[0-8]))\/((0[1-9])|(1[0-2])))|((31\/((0[13578])|(1[02])))|((29|30)\/((0[1,3-9])|(1[0-2])))))\/((20[0-9][0-9])|(19[0-9][0-9])))|((29\/02\/(19|20)(([02468][048])|([13579][26]))))$";
         	  if(bundle.inputData.expiry.match(regex) == null){
         		  throw new Error("Please enter a date in the correct format.")
@@ -48,7 +49,7 @@ module.exports = {
         		      'accept-version': 'v1',
 					  'Content-Type': 'application/json',
         		  },
-        		  body: options,
+        		  body: options, //required fields
         	    }).then(response => {
 				  if (response.status >= 300) { //Something went wrong!
 					throw new Error("Failed creating the UserGroup Membership.");

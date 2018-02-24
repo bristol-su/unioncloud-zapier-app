@@ -5,6 +5,7 @@ const getbyuid = require('./searches/getbyuid');
 const getugnames = require('./triggers/getugnames')
 const newugmembership = require('./triggers/newugmembership');
 const createugmembership = require('./creates/createugm');
+const getevents = require('./triggers/getevents');
 
 //Runs before any request is sent
 const includeSessionKeyHeader = (request, z, bundle) => {
@@ -46,6 +47,7 @@ const App = {
   },
 
   triggers: {
+	  [getevents.key]: getevents, //Get Usergroup Names (for ticketsold)
 	  [getugnames.key]: getugnames, //Get Usergroup Names (for newugmembership)
 	  [newugmembership.key]: newugmembership //Find a new usergroup membership
   },
