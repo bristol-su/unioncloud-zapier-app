@@ -32,30 +32,101 @@ console.log("No test available on local testing for ensuring a 401 error leads t
 
 
 describe('Searching for a user by id (using tt15951)', () => {//search for a user by id
-  it('returns user details', (done) => {
-	  const bundle = {
-      authData: {
-        auth_token: process.env.AUTH_TOKEN,
-        domain: process.env.DOMAIN
-      },
-	  inputData: {
-		  searchData: 'tt15951'
-	  }
-    };
-    appTester(App.searches.searchstudentid.operation.perform, bundle)
-      .then((data) => {
-    	  data.length.should.be.above(0);
-    	  data.forEach(function(user){
-    		  user.should.have.property('surname');
-    		  user.should.have.property('uid');
-    		  user.should.have.property('forename');
-    		  user.should.have.property('id');
-    		  user.should.have.property('email');
-    	  });
-        done();
-      })
-      .catch(done);
-  });
+	describe("Using search fields 'id', 'forename'", () => {
+		  it('returns user details', (done) => {
+			  var data = {
+				  id: 'tt15951',
+				  forename: 'Toby'
+			  };
+			  const bundle = {
+		      authData: {
+		        auth_token: process.env.AUTH_TOKEN,
+		        domain: process.env.DOMAIN
+		      },
+			  inputData: {
+				  searchData: data
+			  }
+		    };
+		    appTester(App.searches.searchuser.operation.perform, bundle)
+		      .then((data) => {
+		    	  data.length.should.be.above(0);
+		    	  data.forEach(function(user){
+		    		  user.should.have.property('surname');
+		    		  user.should.have.property('uid');
+		    		  user.should.have.property('forename');
+		    		  user.should.have.property('id');
+		    		  user.should.have.property('email');
+		    	  });
+		        done();
+		      })
+		      .catch(done);
+		  });
+	});
+	describe("Using search fields 'ID', 'ForeNaMe' to test capitalisation.", () => {
+		  it('returns user details', (done) => {
+			  var data = {
+				  ID: 'tt15951',
+				  ForeNaMe: 'Toby'
+			  };
+			  const bundle = {
+		      authData: {
+		        auth_token: process.env.AUTH_TOKEN,
+		        domain: process.env.DOMAIN
+		      },
+			  inputData: {
+				  searchData: data
+			  }
+		    };
+		    appTester(App.searches.searchuser.operation.perform, bundle)
+		      .then((data) => {
+		    	  data.length.should.be.above(0);
+		    	  data.forEach(function(user){
+		    		  user.should.have.property('surname');
+		    		  user.should.have.property('uid');
+		    		  user.should.have.property('forename');
+		    		  user.should.have.property('id');
+		    		  user.should.have.property('email');
+		    	  });
+		        done();
+		      })
+		      .catch(done);
+		  });
+	});
+	describe("Using all empty fields (aside from id).", () => {
+		  it('returns user details', (done) => {
+			  var data = {
+				  id: 'tt15951',
+				  forename: '',
+				  surname: '',
+				  dob: '',
+				  email: '',
+				  library_card: '',
+				  department: ''
+			  };
+			  const bundle = {
+		      authData: {
+		        auth_token: process.env.AUTH_TOKEN,
+		        domain: process.env.DOMAIN
+		      },
+			  inputData: {
+				  searchData: data
+			  }
+		    };
+		    appTester(App.searches.searchuser.operation.perform, bundle)
+		      .then((data) => {
+		    	  data.length.should.be.above(0);
+		    	  data.forEach(function(user){
+		    		  user.should.have.property('surname');
+		    		  user.should.have.property('uid');
+		    		  user.should.have.property('forename');
+		    		  user.should.have.property('id');
+		    		  user.should.have.property('email');
+		    	  });
+		        done();
+		      })
+		      .catch(done);
+		  });
+	});
 });
 
 describe('Testing for a new UserGroup Membership', () => {

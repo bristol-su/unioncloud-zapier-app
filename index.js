@@ -1,6 +1,6 @@
 //Define all local scripts for future reference
 const authentication = require('./authentication');
-const searchstudentid = require('./searches/searchstudentid');
+const searchuser = require('./searches/searchuser');
 const getbyuid = require('./searches/getbyuid');
 const getugnames = require('./triggers/getugnames')
 const newugmembership = require('./triggers/newugmembership');
@@ -51,7 +51,7 @@ const App = {
   },
 
   searches: {
-	  [searchstudentid.key]: searchstudentid, //Search for user by student id
+	  [searchuser.key]: searchuser, //Search for user by student id
 	  [getbyuid.key]: getbyuid //Get user by uid
   },
 
