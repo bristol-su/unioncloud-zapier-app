@@ -13,7 +13,6 @@ const fetchNames = (z, bundle) => {
       var namesArray = JSON.parse(response.content).data;
       if (namesArray == null){ //No usergroups have been created
     	  throw new Error("Could not find any User Groups.");
-    	  return false;
       }
       returningArray = [];
       namesArray.forEach(function(ugdata){//iterate over the passed back data. We only want to pass back the id and
