@@ -5,6 +5,7 @@ const getbyuid = require('./searches/getbyuid');
 const getugnames = require('./triggers/getugnames')
 const newugmembership = require('./triggers/newugmembership');
 const createugmembership = require('./creates/createugm');
+const getugm = require('./searches/getugm');
 
 //Runs before any request is sent
 const includeSessionKeyHeader = (request, z, bundle) => {
@@ -52,7 +53,8 @@ const App = {
 
   searches: {
 	  [searchuser.key]: searchuser, //Search for user by student id
-	  [getbyuid.key]: getbyuid //Get user by uid
+	  [getbyuid.key]: getbyuid, //Get user by uid
+	  [getugm.key]: getugm
   },
 
   creates: {
