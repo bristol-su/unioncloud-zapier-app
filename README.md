@@ -1,6 +1,6 @@
-An integration of Unioncloud, the NUS digital platform, and Zapier. Currently configured for Bristol Student Union.
+An integration of Unioncloud, the NUS digital platform, and Zapier.
 
-To run on a local machine, change 'bristol.unioncloud.org' to your unions domain.
+
 
 <b><h3>Features</h3></b>
 
