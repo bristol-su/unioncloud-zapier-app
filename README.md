@@ -22,6 +22,12 @@ An integration of Unioncloud, the NUS digital platform, and Zapier.
           <li>Returns the basic information for a given uID. Takes uID as the only argument.</li>
         </ul>  
       </li>
+      <li>Check if the user is a current student
+        <ul>
+          <li>Currently just checks if the student is found on unioncloud, given a student ID</li>
+          <li>Preferably it'd check whether they were in the 'confirmed students' UG</li>
+        </ul>  
+      </li>
     </ul>  
   </li>
   <li>Triggers
@@ -33,4 +39,18 @@ An integration of Unioncloud, the NUS digital platform, and Zapier.
       </li>
     </ul>  
   </li>
+  <li>Creates
+  <ul>
+    <li>Create a UserGroup Membership
+      <ul>
+        <li>Creates a UserGroup membership</li>
+      </ul>  
+    </li>
+    <li>Delete a UserGroup Membership
+      <ul>
+        <li>Delete a UserGroup membership</li>
+      </ul>  
+    </li>
+  </ul>  
+</li>
 </ul>
